@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 ENV PICOCLAW_MODE=gateway
 ENV COPILOT_PORT=4321
