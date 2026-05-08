@@ -46,8 +46,7 @@ jobs:
           cache-dependency-path: web/package-lock.json
 
       - name: Build web dashboard
-        working-directory: web
-        run: npm ci && npm run build
+        run: cargo web build
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v1
