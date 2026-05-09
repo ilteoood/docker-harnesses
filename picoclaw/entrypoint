@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+# Run user-customizable init script
+bash init
+
+# Start PicoClaw in foreground
+echo "Starting PicoClaw in ${PICOCLAW_MODE:-gateway} mode..."
+exec picoclaw ${PICOCLAW_MODE:-gateway}

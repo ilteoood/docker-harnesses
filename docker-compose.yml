@@ -24,9 +24,9 @@ services:
     ports:
       - "42617:42617"
     restart: unless-stopped
-  pico-pilot:
-    image: ilteoood/pico-pilot
-    container_name: pico-pilot
+  picoclaw:
+    image: ilteoood/picoclaw
+    container_name: picoclaw
     environment:
       - PICOCLAW_MODE=gateway
     volumes:
