@@ -6,7 +6,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 ![OpenClaw](https://github.com/ilteoood/dockerclaw/workflows/OpenClaw/badge.svg?branch=main)
 ![OpenCode](https://github.com/ilteoood/dockerclaw/workflows/OpenCode/badge.svg?branch=main)
 ![OpenFang](https://github.com/ilteoood/dockerclaw/workflows/OpenFang/badge.svg?branch=main)
-![PicoPilot](https://github.com/ilteoood/dockerclaw/workflows/PicoPilot/badge.svg?branch=main)
+![PicoClaw](https://github.com/ilteoood/dockerclaw/workflows/PicoClaw/badge.svg?branch=main)
 ![ClaudeCode](https://github.com/ilteoood/dockerclaw/workflows/ClaudeCode/badge.svg?branch=main)
 ![Codex](https://github.com/ilteoood/dockerclaw/workflows/Codex/badge.svg?branch=main)
 
@@ -24,7 +24,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 | [`ilteoood/openclaw`](https://hub.docker.com/r/ilteoood/openclaw) | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `ghcr.io/openclaw/openclaw:latest` | `18789` | Daily |
 | [`ilteoood/opencode`](https://hub.docker.com/r/ilteoood/opencode) | [opencode-ai](https://www.npmjs.com/package/opencode-ai) (npm) | Node.js LTS slim | — | Daily |
 | [`ilteoood/openfang`](https://hub.docker.com/r/ilteoood/openfang) | [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang) | Ubuntu 24.04 | — | Daily |
-| [`ilteoood/pico-pilot`](https://hub.docker.com/r/ilteoood/pico-pilot) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) + GitHub Copilot CLI | Ubuntu 24.04 | `18790` | Weekly (Mon) |
+| [`ilteoood/picoclaw`](https://hub.docker.com/r/ilteoood/picoclaw) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ubuntu 24.04 | `18790` | Weekly (Mon) |
 | [`ilteoood/claude-code`](https://hub.docker.com/r/ilteoood/claude-code) | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) (npm) | Node.js LTS slim | — | Daily |
 | [`ilteoood/codex`](https://hub.docker.com/r/ilteoood/codex) | [@openai/codex](https://www.npmjs.com/package/@openai/codex) (npm) | Node.js LTS slim | — | Daily |
 
@@ -79,20 +79,19 @@ docker run --name opencode -v /path/to/home:/root ilteoood/opencode
 docker run --name openfang ilteoood/openfang
 ```
 
-### PicoPilot
+### PicoClaw
 
-Combines [PicoClaw](https://github.com/sipeed/picoclaw) with [GitHub Copilot CLI](https://gh.io/copilot-install) in a single container.
+A standalone [PicoClaw](https://github.com/sipeed/picoclaw) container.
 
-- **Dockerfile:** [`Dockerfile.pico-pilot`](./Dockerfile.pico-pilot)
+- **Dockerfile:** [`Dockerfile.picoclaw`](./Dockerfile.picoclaw)
 - **Architectures:** `linux/amd64`, `linux/arm64`
-- **Build process:** Downloads the latest PicoClaw release and installs GitHub Copilot CLI during the image build. At runtime, Copilot CLI starts in headless mode as a background process, followed by PicoClaw in the foreground.
+- **Build process:** Downloads the latest PicoClaw release from GitHub.
 - **Environment variables:**
   - `PICOCLAW_MODE` — PicoClaw run mode (default: `gateway`)
-  - `COPILOT_PORT` — Copilot CLI listen port (default: `4321`)
 - **Exposed port:** `18790`
 
 ```sh
-docker run --name pico-pilot -p 18790:18790 ilteoood/pico-pilot
+docker run --name picoclaw -p 18790:18790 ilteoood/picoclaw
 ```
 
 ### Claude Code
@@ -141,7 +140,7 @@ services:
 
 ## Docker Compose
 
-A ready-to-use [`docker-compose.yml`](./docker-compose.yml) is included in the repository. It defines services for `zeroclaw`, `pico-pilot`, `opencode`, and `claude-code` with shared volumes and configuration support.
+A ready-to-use [`docker-compose.yml`](./docker-compose.yml) is included in the repository. It defines services for `zeroclaw`, `picoclaw`, `opencode`, and `claude-code` with shared volumes and configuration support.
 
 ```sh
 docker compose up -d
@@ -159,7 +158,7 @@ docker compose up -d
 │   │   ├── openclaw.yml
 │   │   ├── opencode.yml
 │   │   ├── openfang.yml
-│   │   ├── pico-pilot.yml
+│   │   ├── picoclaw.yml
 │   │   ├── claude-code.yml
 │   │   └── codex.yml
 │   ├── dependabot.yml      # Automated Docker base-image updates
@@ -168,8 +167,8 @@ docker compose up -d
 ├── openclaw/               # OpenClaw entrypoint & init scripts
 ├── opencode/               # OpenCode entrypoint & init scripts
 ├── claude-code/            # Claude Code entrypoint & init scripts
+├── picoclaw/             # PicoClaw entrypoint, init & download scripts
 ├── codex/                   # Codex CLI entrypoint & init scripts
-├── pico-pilot/             # PicoPilot entrypoint, init & download scripts
 ├── scripts/                # Build helper scripts for Rust binaries
 │   ├── binary_zeroclaw.sh
 │   └── binary_openfang.sh
@@ -177,7 +176,7 @@ docker compose up -d
 ├── Dockerfile.openclaw
 ├── Dockerfile.opencode
 ├── Dockerfile.openfang
-├── Dockerfile.pico-pilot
+├── Dockerfile.picoclaw
 ├── Dockerfile.claude-code
 ├── Dockerfile.codex
 ├── docker-compose.yml
