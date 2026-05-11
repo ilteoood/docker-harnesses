@@ -2,14 +2,6 @@
 
 Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI tools — automatically built and published to [Docker Hub](https://hub.docker.com/u/ilteoood).
 
-![ZeroClaw](https://github.com/ilteoood/dockerclaw/workflows/ZeroClaw/badge.svg?branch=main)
-![OpenClaw](https://github.com/ilteoood/dockerclaw/workflows/OpenClaw/badge.svg?branch=main)
-![OpenCode](https://github.com/ilteoood/dockerclaw/workflows/OpenCode/badge.svg?branch=main)
-![OpenFang](https://github.com/ilteoood/dockerclaw/workflows/OpenFang/badge.svg?branch=main)
-![PicoClaw](https://github.com/ilteoood/dockerclaw/workflows/PicoClaw/badge.svg?branch=main)
-![ClaudeCode](https://github.com/ilteoood/dockerclaw/workflows/ClaudeCode/badge.svg?branch=main)
-![Codex](https://github.com/ilteoood/dockerclaw/workflows/Codex/badge.svg?branch=main)
-
 ---
 
 ## Overview
@@ -18,15 +10,15 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 
 ## Available Images
 
-| Image | Upstream Project | Base Image | Ports | Build Schedule |
-|---|---|---|---|---|
-| [`ilteoood/zeroclaw`](https://hub.docker.com/r/ilteoood/zeroclaw) | [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) | Ubuntu 24.04 | `42617` | Daily |
-| [`ilteoood/openclaw`](https://hub.docker.com/r/ilteoood/openclaw) | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `ghcr.io/openclaw/openclaw:latest` | `18789` | Daily |
-| [`ilteoood/opencode`](https://hub.docker.com/r/ilteoood/opencode) | [opencode-ai](https://www.npmjs.com/package/opencode-ai) (npm) | Node.js LTS slim | — | Daily |
-| [`ilteoood/openfang`](https://hub.docker.com/r/ilteoood/openfang) | [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang) | Ubuntu 24.04 | — | Daily |
-| [`ilteoood/picoclaw`](https://hub.docker.com/r/ilteoood/picoclaw) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ubuntu 24.04 | `18790` | Weekly (Mon) |
-| [`ilteoood/claude-code`](https://hub.docker.com/r/ilteoood/claude-code) | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) (npm) | Node.js LTS slim | — | Daily |
-| [`ilteoood/codex`](https://hub.docker.com/r/ilteoood/codex) | [@openai/codex](https://www.npmjs.com/package/@openai/codex) (npm) | Node.js LTS slim | — | Daily |
+| Image | Upstream Project | Base Image | Ports | Build Status | Build Schedule |
+|---|---|---|---|---|---|
+| [`ilteoood/zeroclaw`](https://hub.docker.com/r/ilteoood/zeroclaw) | [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) | Ubuntu 24.04 | `42617` | ![ZeroClaw](https://github.com/ilteoood/docker-harnesses/workflows/ZeroClaw/badge.svg?branch=main) | Daily |
+| [`ilteoood/openclaw`](https://hub.docker.com/r/ilteoood/openclaw) | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `ghcr.io/openclaw/openclaw:latest` | `18789` | ![OpenClaw](https://github.com/ilteoood/docker-harnesses/workflows/OpenClaw/badge.svg?branch=main) | Daily |
+| [`ilteoood/opencode`](https://hub.docker.com/r/ilteoood/opencode) | [opencode-ai](https://www.npmjs.com/package/opencode-ai) (npm) | Node.js LTS slim | — | ![OpenCode](https://github.com/ilteoood/docker-harnesses/workflows/OpenCode/badge.svg?branch=main) | Daily |
+| [`ilteoood/openfang`](https://hub.docker.com/r/ilteoood/openfang) | [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang) | Ubuntu 24.04 | — | ![OpenFang](https://github.com/ilteoood/docker-harnesses/workflows/OpenFang/badge.svg?branch=main) | Daily |
+| [`ilteoood/picoclaw`](https://hub.docker.com/r/ilteoood/picoclaw) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ubuntu 24.04 | `18790` | ![PicoClaw](https://github.com/ilteoood/docker-harnesses/workflows/PicoClaw/badge.svg?branch=main) | Weekly (Mon) |
+| [`ilteoood/claude-code`](https://hub.docker.com/r/ilteoood/claude-code) | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) (npm) | Node.js LTS slim | — | ![ClaudeCode](https://github.com/ilteoood/docker-harnesses/workflows/ClaudeCode/badge.svg?branch=main) | Daily |
+| [`ilteoood/codex`](https://hub.docker.com/r/ilteoood/codex) | [@openai/codex](https://www.npmjs.com/package/@openai/codex) (npm) | Node.js LTS slim | — | ![Codex](https://github.com/ilteoood/docker-harnesses/workflows/Codex/badge.svg?branch=main) | Daily |
 
 ---
 
