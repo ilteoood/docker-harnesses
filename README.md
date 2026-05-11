@@ -1,4 +1,4 @@
-# dockerclaw
+# docker-harnesses
 
 Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI tools — automatically built and published to [Docker Hub](https://hub.docker.com/u/ilteoood).
 
