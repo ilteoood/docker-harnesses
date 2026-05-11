@@ -6,7 +6,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 
 ## Overview
 
-**dockerclaw** provides [multi-arch](https://medium.com/gft-engineering/docker-why-multi-arch-images-matters-927397a5be2e) Docker images (`linux/amd64` and `linux/arm64`) for several AI-powered tools. Every image is rebuilt automatically via [GitHub Actions](https://github.com/features/actions) to always track the latest upstream release.
+**docker-harnesses** provides [multi-arch](https://medium.com/gft-engineering/docker-why-multi-arch-images-matters-927397a5be2e) Docker images (`linux/amd64` and `linux/arm64`) for several AI-powered tools. Every image is rebuilt automatically via [GitHub Actions](https://github.com/features/actions) to always track the latest upstream release.
 
 ## Available Images
 
