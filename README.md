@@ -19,6 +19,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 | [`ilteoood/picoclaw`](https://hub.docker.com/r/ilteoood/picoclaw) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ubuntu 24.04 | `18790` | ![PicoClaw](https://github.com/ilteoood/docker-harnesses/workflows/PicoClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/claude-code`](https://hub.docker.com/r/ilteoood/claude-code) | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) (npm) | Node.js LTS slim | — | ![ClaudeCode](https://github.com/ilteoood/docker-harnesses/workflows/ClaudeCode/badge.svg?branch=main) | Daily |
 | [`ilteoood/codex`](https://hub.docker.com/r/ilteoood/codex) | [@openai/codex](https://www.npmjs.com/package/@openai/codex) (npm) | Node.js LTS slim | — | ![Codex](https://github.com/ilteoood/docker-harnesses/workflows/Codex/badge.svg?branch=main) | Daily |
+| [`ilteoood/copilot-cli`](https://hub.docker.com/r/ilteoood/copilot-cli) | [@github/copilot](https://www.npmjs.com/package/@github/copilot) (npm) | Node.js LTS slim | — | ![CopilotCLI](https://github.com/ilteoood/docker-harnesses/workflows/CopilotCLI/badge.svg?branch=main) | Daily |
 
 ---
 
@@ -106,6 +107,16 @@ docker run --name claude-code -v /path/to/home:/root ilteoood/claude-code
 docker run --name codex -v /path/to/home:/root ilteoood/codex
 ```
 
+### GitHub Copilot CLI
+
+- **Dockerfile:** [`Dockerfile.copilot-cli`](./Dockerfile.copilot-cli)
+- **Architectures:** `linux/amd64`, `linux/arm64`
+- **Build process:** Installs the latest `@github/copilot` npm package globally on a Node.js LTS slim base.
+
+```sh
+docker run --name copilot -v /path/to/home:/root ilteoood/copilot-cli
+```
+
 ---
 
 ## Custom Initialization
@@ -152,7 +163,8 @@ docker compose up -d
 │   │   ├── openfang.yml
 │   │   ├── picoclaw.yml
 │   │   ├── claude-code.yml
-│   │   └── codex.yml
+│   │   ├── codex.yml
+│   │   └── copilot-cli.yml
 │   ├── dependabot.yml      # Automated Docker base-image updates
 │   └── funding.yml         # Sponsorship configuration
 ├── src/                    # ZeroClaw entrypoint & init scripts
@@ -161,6 +173,7 @@ docker compose up -d
 ├── claude-code/            # Claude Code entrypoint & init scripts
 ├── picoclaw/             # PicoClaw entrypoint, init & download scripts
 ├── codex/                   # Codex CLI entrypoint & init scripts
+├── copilot-cli/             # Copilot CLI entrypoint & init scripts
 ├── scripts/                # Build helper scripts for Rust binaries
 │   ├── binary_zeroclaw.sh
 │   └── binary_openfang.sh
@@ -171,6 +184,7 @@ docker compose up -d
 ├── Dockerfile.picoclaw
 ├── Dockerfile.claude-code
 ├── Dockerfile.codex
+├── Dockerfile.copilot-cli
 ├── docker-compose.yml
 └── README.md
 ```
