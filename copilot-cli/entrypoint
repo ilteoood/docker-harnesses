@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+# Run user-customizable init script
+bash /usr/local/bin/init
+
+# Start GitHub Copilot CLI
+echo "Starting GitHub Copilot CLI..."
+exec copilot

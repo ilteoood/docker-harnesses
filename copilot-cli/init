@@ -1,0 +1,4 @@
+#!/bin/bash
+# Custom init script for Copilot CLI - modify as needed
+
+echo "No init file configured, skipping..."
