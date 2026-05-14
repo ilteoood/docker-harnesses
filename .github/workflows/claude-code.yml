@@ -28,10 +28,10 @@ jobs:
           fi
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Get latest happy version
-        id: latest_happy
+      - name: Get latest paseo version
+        id: latest_paseo
         run: |
-          TAG=$(npm view happy version)
+          TAG=$(npm view @getpaseo/cli version)
           if [ -z "$TAG" ]; then
             echo "Failed to fetch latest version" >&2
             exit 1
@@ -45,7 +45,7 @@ jobs:
           platform: linux/amd64,linux/arm64
           imageName: ilteoood/claude-code
           dockerFile: Dockerfile.claude-code
-          label: version=${{ steps.latest_release.outputs.tag }},happy_version=${{ steps.latest_happy.outputs.tag }}
+          label: version=${{ steps.latest_release.outputs.tag }},paseo_version=${{ steps.latest_paseo.outputs.tag }}
           publish: true
           dockerUser: ilteoood
           dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
