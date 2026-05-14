@@ -1,6 +1,6 @@
 FROM node:lts-slim
 
-RUN npm i -g @anthropic-ai/claude-code@latest happy@latest
+RUN npm i -g @anthropic-ai/claude-code@latest @getpaseo/cli@latest
 
 COPY --chmod=755 claude-code/* /usr/local/bin/
 
