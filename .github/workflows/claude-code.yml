@@ -31,7 +31,7 @@ jobs:
       - name: Get latest paseo version
         id: latest_paseo
         run: |
-          TAG=$(npm view @anthropic-ai/paseo version)
+          TAG=$(npm view @getpaseo/cli version)
           if [ -z "$TAG" ]; then
             echo "Failed to fetch latest version" >&2
             exit 1

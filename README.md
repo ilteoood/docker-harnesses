@@ -91,7 +91,7 @@ docker run --name picoclaw -p 18790:18790 ilteoood/picoclaw
 
 - **Dockerfile:** [`Dockerfile.claude-code`](./Dockerfile.claude-code)
 - **Architectures:** `linux/amd64`, `linux/arm64`
-- **Build process:** Installs the latest `@anthropic-ai/claude-code` and `@anthropic-ai/paseo` npm packages globally on a Node.js LTS slim base.
+- **Build process:** Installs the latest `@anthropic-ai/claude-code` and `@getpaseo/cli` npm packages globally on a Node.js LTS slim base.
 
 ```sh
 docker run --name claude-code -v /path/to/home:/root ilteoood/claude-code
