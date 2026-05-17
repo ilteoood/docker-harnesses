@@ -11,6 +11,21 @@ volumes:
   workspace:
 
 services:
+  nullclaw:
+    image: ilteoood/nullclaw
+    container_name: nullclaw
+    environment:
+      - NULLCLAW_MODE=gateway
+    volumes:
+      - home:/root
+      - workspace:/home/workspace
+    configs:
+      - source: init_script
+        target: /usr/local/bin/init
+        mode: 0755
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
   zeroclaw:
     image: ilteoood/zeroclaw
     container_name: zeroclaw
