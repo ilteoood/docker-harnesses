@@ -13,6 +13,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 | Image | Upstream Project | Base Image | Ports | Build Status | Build Schedule |
 |---|---|---|---|---|---|
 | [`ilteoood/zeroclaw`](https://hub.docker.com/r/ilteoood/zeroclaw) | [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) | Ubuntu 24.04 | `42617` | ![ZeroClaw](https://github.com/ilteoood/docker-harnesses/workflows/ZeroClaw/badge.svg?branch=main) | Daily |
+| [`ilteoood/nullclaw`](https://hub.docker.com/r/ilteoood/nullclaw) | [nullclaw/nullclaw](https://github.com/nullclaw/nullclaw) | Ubuntu 24.04 | `3000` | ![NullClaw](https://github.com/ilteoood/docker-harnesses/workflows/NullClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/openclaw`](https://hub.docker.com/r/ilteoood/openclaw) | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `ghcr.io/openclaw/openclaw:latest` | `18789` | ![OpenClaw](https://github.com/ilteoood/docker-harnesses/workflows/OpenClaw/badge.svg?branch=main) | Daily |
 | [`ilteoood/opencode`](https://hub.docker.com/r/ilteoood/opencode) | [opencode-ai](https://www.npmjs.com/package/opencode-ai) (npm) | Node.js LTS slim | — | ![OpenCode](https://github.com/ilteoood/docker-harnesses/workflows/OpenCode/badge.svg?branch=main) | Daily |
 | [`ilteoood/openfang`](https://hub.docker.com/r/ilteoood/openfang) | [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang) | Ubuntu 24.04 | — | ![OpenFang](https://github.com/ilteoood/docker-harnesses/workflows/OpenFang/badge.svg?branch=main) | Daily |
@@ -40,6 +41,21 @@ docker run --name zeroclaw -v /path/to/home:/root -p 42617:42617 ilteoood/zerocl
 ```
 
 Once running, the ZeroClaw gateway is accessible at `http://localhost:42617`.
+
+### NullClaw
+
+A static Zig binary — the smallest fully autonomous AI assistant infrastructure that fits on any $5 board, boots in milliseconds, and requires nothing but libc.
+
+- **Dockerfile:** [`Dockerfile.nullclaw`](./Dockerfile.nullclaw)
+- **Architectures:** `linux/amd64`, `linux/arm64`
+- **Build process:** Downloads the latest NullClaw release from GitHub.
+- **Environment variables:**
+  - `NULLCLAW_MODE` — NullClaw run mode (default: `gateway`)
+- **Exposed port:** `3000`
+
+```sh
+docker run --name nullclaw -p 3000:3000 ilteoood/nullclaw
+```
 
 ### OpenClaw
 
@@ -158,6 +174,7 @@ docker compose up -d
 ├── .github/
 │   ├── workflows/          # CI/CD workflows (one per image)
 │   │   ├── zeroclaw.yml
+│   │   ├── nullclaw.yml
 │   │   ├── openclaw.yml
 │   │   ├── opencode.yml
 │   │   ├── openfang.yml
@@ -168,6 +185,7 @@ docker compose up -d
 │   ├── dependabot.yml      # Automated Docker base-image updates
 │   └── funding.yml         # Sponsorship configuration
 ├── src/                    # ZeroClaw entrypoint & init scripts
+├── nullclaw/               # NullClaw entrypoint, init & download scripts
 ├── openclaw/               # OpenClaw entrypoint & init scripts
 ├── opencode/               # OpenCode entrypoint & init scripts
 ├── claude-code/            # Claude Code entrypoint & init scripts
@@ -178,6 +196,7 @@ docker compose up -d
 │   ├── binary_zeroclaw.sh
 │   └── binary_openfang.sh
 ├── Dockerfile.zeroclaw
+├── Dockerfile.nullclaw
 ├── Dockerfile.openclaw
 ├── Dockerfile.opencode
 ├── Dockerfile.openfang
