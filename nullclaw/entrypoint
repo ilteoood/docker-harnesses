@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+# Run user-customizable init script
+bash init
+
+# Start NullClaw in foreground
+echo "Starting NullClaw in ${NULLCLAW_MODE:-gateway} mode..."
+exec nullclaw ${NULLCLAW_MODE:-gateway}

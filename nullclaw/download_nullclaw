@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e
+
+case $1 in
+  amd64)
+    ARCH="x86_64"
+    ;;
+  arm64)
+    ARCH="aarch64"
+    ;;
+  *)
+    echo "Unsupported architecture: $1"
+    exit 1
+    ;;
+esac
+
+echo "Downloading NullClaw for Linux ${ARCH}..."
+
+# Get latest release version
+LATEST_TAG=$(curl -sL https://api.github.com/repos/nullclaw/nullclaw/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4)
+DOWNLOAD_URL="https://github.com/nullclaw/nullclaw/releases/download/${LATEST_TAG}/nullclaw-linux-${ARCH}.bin"
+
+echo "Latest version: ${LATEST_TAG}"
+echo "Downloading from: ${DOWNLOAD_URL}"
+
+curl -fsSL "${DOWNLOAD_URL}" -o /usr/local/bin/nullclaw
+chmod +x /usr/local/bin/nullclaw
+
+echo "NullClaw installed successfully"
+nullclaw --version
