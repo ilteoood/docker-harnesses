@@ -12,7 +12,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 
 | Image | Upstream Project | Base Image | Ports | Build Status | Build Schedule |
 |---|---|---|---|---|---|
-| [`ilteoood/zeroclaw`](https://hub.docker.com/r/ilteoood/zeroclaw) | [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) | Ubuntu 24.04 | `42617` | ![ZeroClaw](https://github.com/ilteoood/docker-harnesses/workflows/ZeroClaw/badge.svg?branch=main) | Daily |
+| [`ilteoood/zeroclaw`](https://hub.docker.com/r/ilteoood/zeroclaw) | [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) | Ubuntu 24.04 | `42617` | ![ZeroClaw](https://github.com/ilteoood/docker-harnesses/workflows/ZeroClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/nullclaw`](https://hub.docker.com/r/ilteoood/nullclaw) | [nullclaw/nullclaw](https://github.com/nullclaw/nullclaw) | Ubuntu 24.04 | `3000` | ![NullClaw](https://github.com/ilteoood/docker-harnesses/workflows/NullClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/openclaw`](https://hub.docker.com/r/ilteoood/openclaw) | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `ghcr.io/openclaw/openclaw:latest` | `18789` | ![OpenClaw](https://github.com/ilteoood/docker-harnesses/workflows/OpenClaw/badge.svg?branch=main) | Daily |
 | [`ilteoood/opencode`](https://hub.docker.com/r/ilteoood/opencode) | [opencode-ai](https://www.npmjs.com/package/opencode-ai) (npm) | Node.js LTS slim | — | ![OpenCode](https://github.com/ilteoood/docker-harnesses/workflows/OpenCode/badge.svg?branch=main) | Daily |
@@ -215,7 +215,7 @@ docker compose up -d
 All images are built and published automatically using [GitHub Actions](https://github.com/features/actions):
 
 - **Trigger:** Push to `main`, manual dispatch, or a scheduled cron job.
-- **Schedule:** Most images are rebuilt daily at 03:00 UTC; PicoPilot is rebuilt weekly on Mondays.
+- **Schedule:** Most images are rebuilt daily at 03:00 UTC; NullClaw, PicoClaw, and ZeroClaw are rebuilt weekly on Mondays.
 - **Multi-arch builds** are performed with [`ilteoood/docker_buildx`](https://github.com/ilteoood/docker_buildx).
 - **Rust images** (ZeroClaw, OpenFang) use [`houseabsolute/actions-rust-cross`](https://github.com/houseabsolute/actions-rust-cross) for cross-compilation.
 - **Dependabot** is configured to check for Docker base-image updates daily.
