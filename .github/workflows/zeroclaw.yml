@@ -91,7 +91,7 @@ jobs:
       - name: Build and publish image
         uses: ilteoood/docker_buildx@master
         with:
-          tag: ${{ github.event.inputs.tag }}
+          tag: ${{ github.event.inputs.tag || 'latest' }}
           platform: linux/amd64,linux/arm64
           imageName: ilteoood/zeroclaw
           dockerFile: Dockerfile.zeroclaw
