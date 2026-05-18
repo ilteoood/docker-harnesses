@@ -37,7 +37,7 @@ jobs:
       - name: Build and publish image
         uses: ilteoood/docker_buildx@master
         with:
-          tag: ${{ github.event.inputs.tag || 'latest' }}
+          tag: ${{ github.event.inputs.tag }}
           platform: linux/amd64,linux/arm64
           imageName: ilteoood/opencode
           dockerFile: Dockerfile.opencode
