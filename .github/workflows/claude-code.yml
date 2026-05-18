@@ -51,7 +51,7 @@ jobs:
           platform: linux/amd64,linux/arm64
           imageName: ilteoood/claude-code
           dockerFile: Dockerfile.claude-code
-          label: version=${{ steps.latest_release.outputs.tag }},paseo_version=${{ steps.latest_paseo.outputs.tag }}
+          label: claude code version=${{ steps.latest_release.outputs.tag }},paseo_version=${{ steps.latest_paseo.outputs.tag }}
           publish: true
           dockerUser: ilteoood
           dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
