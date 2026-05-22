@@ -1,16 +1,4 @@
-FROM ubuntu:24.04
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN useradd -m -s /bin/bash hermes
-
-USER hermes
-WORKDIR /home/hermes
+FROM nousresearch/hermes-agent:latest
 
 COPY --chmod=755 hermes-agent/init /usr/local/bin/init
 COPY --chmod=755 hermes-agent/entrypoint /usr/local/bin/entrypoint
