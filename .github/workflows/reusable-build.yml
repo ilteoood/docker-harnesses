@@ -1,0 +1,87 @@
+name: Reusable Build Jobs
+
+on:
+  workflow_call:
+    inputs:
+      buildType:
+        description: 'Type of build: npm, simple'
+        required: true
+        type: string
+      imageName:
+        description: 'Docker Hub image name (e.g., ilteoood/claude-code)'
+        required: true
+        type: string
+      dockerFile:
+        description: 'Dockerfile name (e.g., Dockerfile.claude-code)'
+        required: true
+        type: string
+      defaultTag:
+        description: 'Default image tag'
+        required: false
+        default: 'latest'
+        type: string
+      versionCommand:
+        description: 'npm package name to get version from'
+        required: false
+        type: string
+      labelKey:
+        description: 'Label key for version (e.g., version, claude_code_version)'
+        required: false
+        type: string
+      dockerUser:
+        description: 'Docker Hub username'
+        required: true
+        type: string
+    secrets:
+      DOCKER_HUB_PASSWORD:
+        required: true
+
+jobs:
+  # Simple build: just docker build/publish (nullclaw, picoclaw, hermes-agent)
+  simple:
+    if: inputs.buildType == 'simple'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Build and publish image
+        uses: ilteoood/docker_buildx@master
+        with:
+          tag: ${{ github.event.inputs.tag || inputs.defaultTag }}
+          platform: linux/amd64,linux/arm64
+          imageName: ${{ inputs.imageName }}
+          dockerFile: ${{ inputs.dockerFile }}
+          publish: true
+          dockerUser: ${{ inputs.dockerUser }}
+          dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+  # npm build: fetch version from npm registry then docker build (claude-code, codex, copilot-cli, opencode)
+  npm:
+    if: inputs.buildType == 'npm'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Get latest version
+        id: latest_release
+        run: |
+          TAG=$(npm view ${{ inputs.versionCommand }} version)
+          if [ -z "$TAG" ]; then
+            echo "Failed to fetch latest version" >&2
+            exit 1
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Build and publish image
+        uses: ilteoood/docker_buildx@master
+        with:
+          tag: ${{ github.event.inputs.tag || inputs.defaultTag }}
+          platform: linux/amd64,linux/arm64
+          imageName: ${{ inputs.imageName }}
+          dockerFile: ${{ inputs.dockerFile }}
+          label: ${{ inputs.labelKey }}=${{ steps.latest_release.outputs.tag }}
+          publish: true
+          dockerUser: ${{ inputs.dockerUser }}
+          dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}

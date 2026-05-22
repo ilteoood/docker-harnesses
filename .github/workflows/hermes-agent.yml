@@ -18,19 +18,13 @@ permissions:
   contents: read
 
 jobs:
-  docker_image:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Build and publish image
-        uses: ilteoood/docker_buildx@master
-        with:
-          tag: ${{ github.event.inputs.tag || 'latest' }}
-          platform: linux/amd64,linux/arm64
-          imageName: ilteoood/hermes-agent
-          dockerFile: Dockerfile.hermes-agent
-          publish: true
-          dockerUser: ilteoood
-          dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  build:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      buildType: simple
+      imageName: ilteoood/hermes-agent
+      dockerFile: Dockerfile.hermes-agent
+      defaultTag: latest
+      dockerUser: ilteoood
+    secrets:
+      DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}

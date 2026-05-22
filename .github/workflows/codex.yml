@@ -18,30 +18,15 @@ permissions:
   contents: read
 
 jobs:
-  docker_image:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Get latest codex version
-        id: latest_release
-        run: |
-          TAG=$(npm view @openai/codex version)
-          if [ -z "$TAG" ]; then
-            echo "Failed to fetch latest version" >&2
-            exit 1
-          fi
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
-
-      - name: Build and publish image
-        uses: ilteoood/docker_buildx@master
-        with:
-          tag: ${{ github.event.inputs.tag || 'latest' }}
-          platform: linux/amd64,linux/arm64
-          imageName: ilteoood/codex
-          dockerFile: Dockerfile.codex
-          label: version=${{ steps.latest_release.outputs.tag }}
-          publish: true
-          dockerUser: ilteoood
-          dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  build:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      buildType: npm
+      imageName: ilteoood/codex
+      dockerFile: Dockerfile.codex
+      defaultTag: latest
+      versionCommand: '@openai/codex'
+      labelKey: version
+      dockerUser: ilteoood
+    secrets:
+      DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
