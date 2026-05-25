@@ -1,0 +1,47 @@
+name: AionUi
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag to build and publish'
+        required: false
+        default: 'latest'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  docker_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Get latest AionUi version
+        id: latest_release
+        run: |
+          TAG=$(curl -sL https://api.github.com/repos/iOfficeAI/AionUi/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4 | sed 's/^v//')
+          if [ -z "$TAG" ]; then
+            echo "Failed to fetch latest version" >&2
+            exit 1
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Build and publish image
+        uses: ilteoood/docker_buildx@master
+        with:
+          tag: ${{ github.event.inputs.tag || 'latest' }}
+          platform: linux/amd64,linux/arm64
+          imageName: ilteoood/aionui
+          dockerFile: Dockerfile.aionui
+          label: version=${{ steps.latest_release.outputs.tag }}
+          publish: true
+          dockerUser: ilteoood
+          dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
