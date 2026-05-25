@@ -22,6 +22,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 | [`ilteoood/codex`](https://hub.docker.com/r/ilteoood/codex) | [@openai/codex](https://www.npmjs.com/package/@openai/codex) (npm) | Node.js LTS slim | — | ![Codex](https://github.com/ilteoood/docker-harnesses/workflows/Codex/badge.svg?branch=main) | Daily |
 | [`ilteoood/hermes-agent`](https://hub.docker.com/r/ilteoood/hermes-agent) | [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | nousresearch/hermes-agent:latest | — | ![HermesAgent](https://github.com/ilteoood/docker-harnesses/workflows/HermesAgent/badge.svg?branch=main) | Daily |
 | [`ilteoood/copilot-cli`](https://hub.docker.com/r/ilteoood/copilot-cli) | [@github/copilot](https://www.npmjs.com/package/@github/copilot) (npm) | Node.js LTS slim | — | ![CopilotCLI](https://github.com/ilteoood/docker-harnesses/workflows/CopilotCLI/badge.svg?branch=main) | Daily |
+| [`ilteoood/aionui`](https://hub.docker.com/r/ilteoood/aionui) | [iOfficeAI/AionUi](https://github.com/iOfficeAI/AionUi) | Ubuntu 24.04 | — | ![AionUi](https://github.com/ilteoood/docker-harnesses/workflows/AionUi/badge.svg?branch=main) | Weekly (Mon) |
 
 ---
 
@@ -148,6 +149,19 @@ A flexible AI agent framework from NousResearch, configurable with multiple LLM 
 docker run --name hermes-agent -v /path/to/home:/root ilteoood/hermes-agent
 ```
 
+### AionUi
+
+A cross-platform desktop AI agent application with support for multiple AI providers.
+
+- **Dockerfile:** [`Dockerfile.aionui`](./Dockerfile.aionui)
+- **Architectures:** `linux/amd64`, `linux/arm64`
+- **Build process:** Downloads the latest AionUi release from GitHub using the official headless installer.
+- **Environment variables:** None required
+
+```sh
+docker run --name aionui -v /path/to/home:/root ilteoood/aionui
+```
+
 ---
 
 ## Custom Initialization
@@ -196,7 +210,8 @@ docker compose up -d
 │   │   ├── picoclaw.yml
 │   │   ├── claude-code.yml
 │   │   ├── codex.yml
-│   │   └── copilot-cli.yml
+│   │   ├── copilot-cli.yml
+│   │   └── aionui.yml
 │   ├── dependabot.yml      # Automated Docker base-image updates
 │   └── funding.yml         # Sponsorship configuration
 ├── src/                    # ZeroClaw entrypoint & init scripts
@@ -208,6 +223,7 @@ docker compose up -d
 ├── picoclaw/             # PicoClaw entrypoint, init & download scripts
 ├── codex/                   # Codex CLI entrypoint & init scripts
 ├── copilot-cli/             # Copilot CLI entrypoint & init scripts
+├── aionui/                  # AionUi entrypoint & init scripts
 ├── scripts/                # Build helper scripts for Rust binaries
 │   ├── binary_zeroclaw.sh
 │   └── binary_openfang.sh
@@ -221,6 +237,7 @@ docker compose up -d
 ├── Dockerfile.claude-code
 ├── Dockerfile.codex
 ├── Dockerfile.copilot-cli
+├── Dockerfile.aionui
 ├── docker-compose.yml
 └── README.md
 ```
