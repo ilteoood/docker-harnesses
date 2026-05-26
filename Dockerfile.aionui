@@ -1,0 +1,24 @@
+FROM ubuntu:24.04
+
+ARG TARGETARCH
+
+RUN apt-get update && \
+    export DEBIAN_FRONTEND=noninteractive && \
+    apt-get install -y --no-install-recommends \
+    curl ca-certificates && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY aionui/* /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/entrypoint /usr/local/bin/init && \
+    VERSION=$(curl -sL https://api.github.com/repos/iOfficeAI/AionUi/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4 | sed 's/^v//') && \
+    curl -fsSL https://static.aionui.com/releases/${VERSION}/AionUi-${VERSION}-linux-${TARGETARCH}.deb -o /tmp/aionui.deb && \
+    apt-get update && \
+    export DEBIAN_FRONTEND=noninteractive && \
+    apt-get install -y --no-install-recommends /tmp/aionui.deb && \
+    rm /tmp/aionui.deb && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /home/workspace
+
+ENTRYPOINT ["entrypoint"]
