@@ -20,7 +20,6 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 | [`ilteoood/picoclaw`](https://hub.docker.com/r/ilteoood/picoclaw) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ubuntu 24.04 | `18790` | ![PicoClaw](https://github.com/ilteoood/docker-harnesses/workflows/PicoClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/claude-code`](https://hub.docker.com/r/ilteoood/claude-code) | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) (npm) | Node.js LTS slim | — | ![ClaudeCode](https://github.com/ilteoood/docker-harnesses/workflows/ClaudeCode/badge.svg?branch=main) | Daily |
 | [`ilteoood/codex`](https://hub.docker.com/r/ilteoood/codex) | [@openai/codex](https://www.npmjs.com/package/@openai/codex) (npm) | Node.js LTS slim | — | ![Codex](https://github.com/ilteoood/docker-harnesses/workflows/Codex/badge.svg?branch=main) | Daily |
-| [`ilteoood/hermes-agent`](https://hub.docker.com/r/ilteoood/hermes-agent) | [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | nousresearch/hermes-agent:latest | — | ![HermesAgent](https://github.com/ilteoood/docker-harnesses/workflows/HermesAgent/badge.svg?branch=main) | Daily |
 | [`ilteoood/copilot-cli`](https://hub.docker.com/r/ilteoood/copilot-cli) | [@github/copilot](https://www.npmjs.com/package/@github/copilot) (npm) | Node.js LTS slim | — | ![CopilotCLI](https://github.com/ilteoood/docker-harnesses/workflows/CopilotCLI/badge.svg?branch=main) | Daily |
 | [`ilteoood/aionui`](https://hub.docker.com/r/ilteoood/aionui) | [iOfficeAI/AionUi](https://github.com/iOfficeAI/AionUi) | Ubuntu 24.04 | — | ![AionUi](https://github.com/ilteoood/docker-harnesses/workflows/AionUi/badge.svg?branch=main) | Weekly (Mon) |
 
@@ -135,20 +134,6 @@ docker run --name codex -v /path/to/home:/root ilteoood/codex
 docker run --name copilot -v /path/to/home:/root ilteoood/copilot-cli
 ```
 
-### Hermes Agent
-
-A flexible AI agent framework from NousResearch, configurable with multiple LLM providers and tools.
-
-- **Dockerfile:** [`Dockerfile.hermes-agent`](./Dockerfile.hermes-agent)
-- **Architectures:** `linux/amd64`, `linux/arm64`
-- **Base image:** [`nousresearch/hermes-agent:latest`](https://hub.docker.com/r/nousresearch/hermes-agent)
-- **Build process:** Extends the official `nousresearch/hermes-agent:latest` image with custom entrypoint and init scripts.
-- **Exposed port:** None (CLI tool)
-
-```sh
-docker run --name hermes-agent -v /path/to/home:/root ilteoood/hermes-agent
-```
-
 ### AionUi
 
 A cross-platform desktop AI agent application with support for multiple AI providers.
@@ -215,7 +200,6 @@ docker compose up -d
 │   ├── dependabot.yml      # Automated Docker base-image updates
 │   └── funding.yml         # Sponsorship configuration
 ├── src/                    # ZeroClaw entrypoint & init scripts
-├── hermes-agent/           # Hermes Agent entrypoint & init scripts
 ├── nullclaw/               # NullClaw entrypoint, init & download scripts
 ├── openclaw/               # OpenClaw entrypoint & init scripts
 ├── opencode/               # OpenCode entrypoint & init scripts
@@ -228,7 +212,6 @@ docker compose up -d
 │   ├── binary_zeroclaw.sh
 │   └── binary_openfang.sh
 ├── Dockerfile.zeroclaw
-├── Dockerfile.hermes-agent
 ├── Dockerfile.nullclaw
 ├── Dockerfile.openclaw
 ├── Dockerfile.opencode
