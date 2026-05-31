@@ -117,14 +117,3 @@ services:
         target: /usr/local/bin/init
         mode: 0755
     restart: unless-stopped
-  hermes-agent:
-    image: ilteoood/hermes-agent
-    container_name: hermes-agent
-    volumes:
-      - home:/root
-      - workspace:/home/workspace
-    configs:
-      - source: init_script
-        target: /usr/local/bin/init
-        mode: 0755
-    restart: unless-stopped

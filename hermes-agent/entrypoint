@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-bash /usr/local/bin/init
-
-echo "Starting Hermes Agent..."
-exec /usr/bin/tini -g -- /opt/hermes/docker/entrypoint.sh gateway run

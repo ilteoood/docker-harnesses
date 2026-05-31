@@ -1,6 +1,0 @@
-FROM nousresearch/hermes-agent:latest
-
-COPY --chmod=755 hermes-agent/init /usr/local/bin/init
-COPY --chmod=755 hermes-agent/entrypoint /usr/local/bin/entrypoint
-
-ENTRYPOINT ["entrypoint"]
