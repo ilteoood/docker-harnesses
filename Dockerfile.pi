@@ -1,0 +1,7 @@
+FROM node:lts-slim
+
+RUN npm i -g @earendil-works/pi-coding-agent@latest @getpaseo/cli@latest
+
+COPY --chmod=755 pi/* /usr/local/bin/
+
+ENTRYPOINT ["entrypoint"]
