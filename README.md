@@ -19,6 +19,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 | [`ilteoood/openfang`](https://hub.docker.com/r/ilteoood/openfang) | [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang) | Ubuntu 24.04 | — | ![OpenFang](https://github.com/ilteoood/docker-harnesses/workflows/OpenFang/badge.svg?branch=main) | Daily |
 | [`ilteoood/picoclaw`](https://hub.docker.com/r/ilteoood/picoclaw) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ubuntu 24.04 | `18790` | ![PicoClaw](https://github.com/ilteoood/docker-harnesses/workflows/PicoClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/claude-code`](https://hub.docker.com/r/ilteoood/claude-code) | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) (npm) | Node.js LTS slim | — | ![ClaudeCode](https://github.com/ilteoood/docker-harnesses/workflows/ClaudeCode/badge.svg?branch=main) | Daily |
+| [`ilteoood/pi`](https://hub.docker.com/r/ilteoood/pi) | [@earendil-works/pi-coding-agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) (npm) | Node.js LTS slim | — | ![Pi](https://github.com/ilteoood/docker-harnesses/workflows/Pi/badge.svg?branch=main) | Daily |
 | [`ilteoood/codex`](https://hub.docker.com/r/ilteoood/codex) | [@openai/codex](https://www.npmjs.com/package/@openai/codex) (npm) | Node.js LTS slim | — | ![Codex](https://github.com/ilteoood/docker-harnesses/workflows/Codex/badge.svg?branch=main) | Daily |
 | [`ilteoood/copilot-cli`](https://hub.docker.com/r/ilteoood/copilot-cli) | [@github/copilot](https://www.npmjs.com/package/@github/copilot) (npm) | Node.js LTS slim | — | ![CopilotCLI](https://github.com/ilteoood/docker-harnesses/workflows/CopilotCLI/badge.svg?branch=main) | Daily |
 | [`ilteoood/aionui`](https://hub.docker.com/r/ilteoood/aionui) | [iOfficeAI/AionUi](https://github.com/iOfficeAI/AionUi) | Ubuntu 24.04 | — | ![AionUi](https://github.com/ilteoood/docker-harnesses/workflows/AionUi/badge.svg?branch=main) | Weekly (Mon) |
@@ -114,6 +115,16 @@ docker run --name picoclaw -p 18790:18790 ilteoood/picoclaw
 docker run --name claude-code -v /path/to/home:/root ilteoood/claude-code
 ```
 
+### Pi
+
+- **Dockerfile:** [`Dockerfile.pi`](./Dockerfile.pi)
+- **Architectures:** `linux/amd64`, `linux/arm64`
+- **Build process:** Installs the latest `@earendil-works/pi-coding-agent` and `@getpaseo/cli` npm packages globally on a Node.js LTS slim base.
+
+```sh
+docker run --name pi -v /path/to/home:/root ilteoood/pi
+```
+
 ### Codex CLI
 
 - **Dockerfile:** [`Dockerfile.codex`](./Dockerfile.codex)
@@ -196,6 +207,7 @@ docker compose up -d
 │   │   ├── claude-code.yml
 │   │   ├── codex.yml
 │   │   ├── copilot-cli.yml
+│   │   ├── pi.yml
 │   │   └── aionui.yml
 │   ├── dependabot.yml      # Automated Docker base-image updates
 │   └── funding.yml         # Sponsorship configuration
@@ -207,6 +219,7 @@ docker compose up -d
 ├── picoclaw/             # PicoClaw entrypoint, init & download scripts
 ├── codex/                   # Codex CLI entrypoint & init scripts
 ├── copilot-cli/             # Copilot CLI entrypoint & init scripts
+├── pi/                      # Pi coding agent entrypoint & init scripts
 ├── aionui/                  # AionUi entrypoint & init scripts
 ├── scripts/                # Build helper scripts for Rust binaries
 │   ├── binary_zeroclaw.sh
@@ -220,6 +233,7 @@ docker compose up -d
 ├── Dockerfile.claude-code
 ├── Dockerfile.codex
 ├── Dockerfile.copilot-cli
+├── Dockerfile.pi
 ├── Dockerfile.aionui
 ├── docker-compose.yml
 └── README.md

@@ -1,0 +1,57 @@
+name: Pi
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag to build and publish'
+        required: false
+        default: 'latest'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  docker_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Get latest pi-coding-agent version
+        id: latest_release
+        run: |
+          TAG=$(npm view @earendil-works/pi-coding-agent version)
+          if [ -z "$TAG" ]; then
+            echo "Failed to fetch latest version" >&2
+            exit 1
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Get latest paseo version
+        id: latest_paseo
+        run: |
+          TAG=$(npm view @getpaseo/cli version)
+          if [ -z "$TAG" ]; then
+            echo "Failed to fetch latest version" >&2
+            exit 1
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Build and publish image
+        uses: ilteoood/docker_buildx@master
+        with:
+          tag: ${{ github.event.inputs.tag || 'latest' }}
+          platform: linux/amd64,linux/arm64
+          imageName: ilteoood/pi
+          dockerFile: Dockerfile.pi
+          label: pi_version=${{ steps.latest_release.outputs.tag }},paseo_version=${{ steps.latest_paseo.outputs.tag }}
+          publish: true
+          dockerUser: ilteoood
+          dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
