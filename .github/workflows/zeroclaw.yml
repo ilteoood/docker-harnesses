@@ -57,6 +57,12 @@ jobs:
           cache: npm
           cache-dependency-path: zeroclaw/web/package-lock.json
 
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          targets: ${{ matrix.platform.target }}
+
       - name: Build web dashboard
         working-directory: zeroclaw
         run: cargo web build
@@ -68,16 +74,19 @@ jobs:
             --file harnesses/zeroclaw/cross/Dockerfile.${{ matrix.platform.target }} \
             harnesses/zeroclaw/cross
 
+      - name: Install cross
+        run: cargo install cross --version 0.2.5 --locked
+
       - name: Build binary
-        uses: houseabsolute/actions-rust-cross@v1
-        with:
-          command: build
-          working-directory: zeroclaw
-          target: ${{ matrix.platform.target }}
-          args: "--release --locked --features agent-runtime,whatsapp-web,rag-pdf,browser-native,plugins-wasm"
-          strip: true
+        working-directory: zeroclaw
+        run: |
+          cross build \
+            --release \
+            --locked \
+            --target ${{ matrix.platform.target }} \
+            --strip \
+            --features agent-runtime,whatsapp-web,rag-pdf,browser-native,plugins-wasm
         env:
-          CROSS_CONTAINER_OPTS: "-v /var/run/docker.sock:/var/run/docker.sock"
           CROSS_IMAGE: zeroclaw-cross-${{ matrix.platform.target }}
 
       - name: Upload artifact
