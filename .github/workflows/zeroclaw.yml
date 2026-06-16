@@ -65,8 +65,8 @@ jobs:
         run: |
           docker build \
             --tag zeroclaw-cross-${{ matrix.platform.target }} \
-            --file harnesses/.github/docker/zeroclaw-cross/Dockerfile.${{ matrix.platform.target }} \
-            harnesses/.github/docker/zeroclaw-cross
+            --file harnesses/zeroclaw/cross/Dockerfile.${{ matrix.platform.target }} \
+            harnesses/zeroclaw/cross
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v1
