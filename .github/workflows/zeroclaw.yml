@@ -84,10 +84,10 @@ jobs:
             --release \
             --locked \
             --target ${{ matrix.platform.target }} \
-            --strip \
             --features agent-runtime,whatsapp-web,rag-pdf,browser-native,plugins-wasm
         env:
           CROSS_IMAGE: zeroclaw-cross-${{ matrix.platform.target }}
+          RUSTFLAGS: "-C strip=symbols"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
