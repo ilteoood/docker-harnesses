@@ -13,11 +13,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=toolchain /usr/local/ /usr/local/
 COPY --from=toolchain /base-runner.sh /base-runner.sh
 COPY --from=toolchain /opt/toolchain.cmake /opt/toolchain.cmake
-COPY --from=toolchain /usr/bin/x86_64-linux-musl-gcc.sh /usr/bin/x86_64-linux-musl-gcc.sh
 
 ENV CROSS_TOOLCHAIN_PREFIX=x86_64-linux-musl- \
     CROSS_SYSROOT=/usr/local/x86_64-linux-musl \
-    CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-linux-musl-gcc.sh \
+    CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-linux-musl-gcc \
     AR_x86_64_unknown_linux_musl=x86_64-linux-musl-ar \
     CC_x86_64_unknown_linux_musl=x86_64-linux-musl-gcc \
     CXX_x86_64_unknown_linux_musl=x86_64-linux-musl-g++ \
