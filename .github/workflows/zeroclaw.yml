@@ -24,8 +24,8 @@ jobs:
     strategy:
       matrix:
         platform:
-          - target: aarch64-unknown-linux-musl
-          - target: x86_64-unknown-linux-musl
+          - target: x86_64-unknown-linux-gnu
+          - target: aarch64-unknown-linux-gnu
     runs-on: ubuntu-latest
     steps:
       - name: Get latest release
@@ -45,17 +45,16 @@ jobs:
           ref: ${{ steps.latest_release.outputs.tag }}
           path: zeroclaw
 
-      - name: Checkout harnesses
-        uses: actions/checkout@v6
-        with:
-          path: harnesses
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: npm
           cache-dependency-path: zeroclaw/web/package-lock.json
+
+      - name: Install cross-linker (ARM64)
+        if: matrix.platform.target == 'aarch64-unknown-linux-gnu'
+        run: sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
@@ -67,27 +66,17 @@ jobs:
         working-directory: zeroclaw
         run: cargo web build
 
-      - name: Build cross image
-        run: |
-          docker build \
-            --tag zeroclaw-cross-${{ matrix.platform.target }} \
-            --file harnesses/zeroclaw/cross/Dockerfile.${{ matrix.platform.target }} \
-            harnesses/zeroclaw/cross
-
-      - name: Install cross
-        run: cargo install cross --version 0.2.5 --locked
-
       - name: Build binary
         working-directory: zeroclaw
+        env:
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
+          RUSTFLAGS: "-C strip=symbols"
         run: |
-          cross build \
+          cargo build \
             --release \
             --locked \
             --target ${{ matrix.platform.target }} \
             --features agent-runtime,whatsapp-web,rag-pdf,browser-native,plugins-wasm
-        env:
-          CROSS_IMAGE: zeroclaw-cross-${{ matrix.platform.target }}
-          RUSTFLAGS: "-C strip=symbols"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

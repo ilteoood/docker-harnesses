@@ -1,19 +1,19 @@
-#!/bin/ash
+#!/bin/sh
 
 case $1 in
-
   amd64)
-    export VARIANT=x86_64-unknown-linux-musl
+    VARIANT=x86_64-unknown-linux-gnu
     ;;
 
   arm64)
-    export VARIANT=aarch64-unknown-linux-musl
+    VARIANT=aarch64-unknown-linux-gnu
     ;;
 
   *)
-    export VARIANT=i686-unknown-linux-musl
+    echo "Unsupported architecture: $1" >&2
+    exit 1
     ;;
 esac
 
-mv ./zeroclaw-${VARIANT}/zeroclaw ./zeroclaw
-mv ./web-dist-${VARIANT} ./web-dist
+mv "./zeroclaw-${VARIANT}/zeroclaw" ./zeroclaw
+mv "./web-dist-${VARIANT}" ./web-dist
