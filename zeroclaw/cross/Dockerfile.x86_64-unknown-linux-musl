@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libclang-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=toolchain /usr/local/ /usr/local/
+COPY --from=toolchain /usr/local/x86_64-linux-musl/ /usr/local/x86_64-linux-musl/
 COPY --from=toolchain /base-runner.sh /base-runner.sh
 COPY --from=toolchain /opt/toolchain.cmake /opt/toolchain.cmake
 

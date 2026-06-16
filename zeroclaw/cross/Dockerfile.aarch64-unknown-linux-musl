@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     qemu-user-static \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=toolchain /usr/local/ /usr/local/
+COPY --from=toolchain /usr/local/aarch64-linux-musl/ /usr/local/aarch64-linux-musl/
 COPY --from=toolchain /qemu-runner /qemu-runner
 COPY --from=toolchain /base-runner.sh /base-runner.sh
 COPY --from=toolchain /opt/toolchain.cmake /opt/toolchain.cmake
