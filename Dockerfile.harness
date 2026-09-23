@@ -1,0 +1,57 @@
+FROM node:lts-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH="/root/.cargo/bin:/root/.go/bin:/root/.bun/bin:${PATH}"
+
+RUN apt-get update \
+    && apt-get install -y curl git gnupg wget python3 procps jq unzip ca-certificates \
+    && mkdir -p -m 755 /etc/apt/keyrings \
+    && out=$(mktemp) && wget -nv -O"$out" https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    && cat "$out" | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+    && chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+    && mkdir -p -m 755 /etc/apt/sources.list.d \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+        | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
+    && apt-get install -y gh nodejs \
+    && rm -rf /var/lib/apt/lists/* "$out"
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+RUN curl -sL https://raw.githubusercontent.com/kerolloz/go-installer/master/go.sh | bash
+
+RUN curl -fsSL https://bun.sh/install | bash
+
+RUN npm i -g @anthropic-ai/claude-code@latest @getpaseo/cli@latest skills@latest pnpm@latest lighthouse@latest
+
+RUN skills add https://github.com/ilteoood/harness -g -a claude-code -y
+
+RUN claude plugin marketplace add https://github.com/wakatime/claude-code-wakatime.git \
+    && claude plugin marketplace add DietrichGebert/ponytail \
+    && claude plugin marketplace add thedotmack/claude-mem \
+    && claude plugin marketplace add pbakaus/impeccable \
+    && claude plugin i claude-code-wakatime@wakatime \
+    && claude plugin i typescript-lsp@claude-plugins-official \
+    && claude plugin i rust-analyzer-lsp@claude-plugins-official \
+    && claude plugin i ponytail@ponytail \
+    && claude plugin i claude-mem \
+    && claude plugin i impeccable
+
+RUN set -e; \
+    case "$(uname -m)" in \
+        x86_64) PATTERN="*x86_64-linux*" ;; \
+        aarch64) PATTERN="*aarch64-linux*" ;; \
+        *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;; \
+    esac; \
+    gh release download --pattern "$PATTERN" \
+        -O /tmp/tokensave.tar.gz \
+        -R aovestdipaperino/tokensave \
+    && tar -xzf /tmp/tokensave.tar.gz -C /usr/local/bin \
+    && chmod +x /usr/local/bin/tokensave \
+    && rm /tmp/tokensave.tar.gz
+
+RUN gh extension install github/gh-stack
+
+COPY --chmod=755 harness/* /usr/local/bin/
+
+ENTRYPOINT ["entrypoint"]

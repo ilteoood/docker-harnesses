@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+paseo daemon run &
+
+if [ -f /usr/local/bin/init ]; then
+    bash /usr/local/bin/init
+fi
+
+echo "Starting Claude Code..."
+exec claude

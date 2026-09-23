@@ -76,6 +76,17 @@ services:
         target: /usr/local/bin/init
         mode: 0755
     restart: unless-stopped
+  harness:
+    image: ilteoood/harness
+    container_name: harness
+    volumes:
+      - home:/root
+      - workspace:/home/workspace
+    configs:
+      - source: init_script
+        target: /usr/local/bin/init
+        mode: 0755
+    restart: unless-stopped
   codex:
     image: ilteoood/codex
     container_name: codex
