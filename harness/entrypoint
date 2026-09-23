@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+if [ -f /usr/local/bin/init ]; then
+    bash /usr/local/bin/init
+fi
+
+echo "Starting Paseo..."
+exec paseo daemon run
