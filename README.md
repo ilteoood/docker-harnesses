@@ -124,7 +124,7 @@ A pre-baked Claude Code image: same `node:lts-slim` base and same `claude` / `pa
 - **Entrypoint:** [`harness/entrypoint`](./harness/entrypoint)
 - **Architectures:** `linux/amd64`, `linux/arm64`
 - **Baked at build time:** `curl git gnupg wget python3 procps jq unzip ca-certificates`, GitHub CLI (`gh`), Node.js 24.x, Rust (stable, via rustup), Go (latest, via kerolloz/go-installer), Bun (latest), npm globals (`@anthropic-ai/claude-code`, `@getpaseo/cli`, `skills`, `pnpm`, `lighthouse`), Claude plugin marketplaces (`wakatime/claude-code-wakatime`, `DietrichGebert/ponytail`, `thedotmack/claude-mem`, `pbakaus/impeccable`) and plugins (`claude-code-wakatime`, `typescript-lsp`, `rust-analyzer-lsp`, `ponytail`, `claude-mem`, `impeccable`), `tokensave` binary (per-arch release download), `gh-stack` extension, and the `ilteoood/harness` skill.
-- **Entrypoint behaviour:** starts `paseo daemon run` in the background, runs `/usr/local/bin/init` if mounted, then `exec claude`.
+- **Entrypoint behaviour:** runs `/usr/local/bin/init` if mounted, then `exec paseo daemon run` (the daemon runs as PID 1).
 - **Left for the mounted `/usr/local/bin/init`** (needs runtime context, secrets, or per-user state): `gh auth setup-git`, `npx -y ctx7 setup --claude --cli --api-key $CONTEXT7_API_KEY`, `tokensave install --agent claude --git-hook yes`, `git config --global user.email/user.name`.
 
 ```sh
