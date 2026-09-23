@@ -30,6 +30,7 @@ RUN claude plugin marketplace add https://github.com/wakatime/claude-code-wakati
     && claude plugin marketplace add DietrichGebert/ponytail \
     && claude plugin marketplace add thedotmack/claude-mem \
     && claude plugin marketplace add pbakaus/impeccable \
+    && claude plugin marketplace update \
     && claude plugin i claude-code-wakatime@wakatime \
     && claude plugin i typescript-lsp@claude-plugins-official \
     && claude plugin i rust-analyzer-lsp@claude-plugins-official \
