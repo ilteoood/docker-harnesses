@@ -22,7 +22,7 @@ RUN curl -sL https://raw.githubusercontent.com/kerolloz/go-installer/master/go.s
 
 RUN curl -fsSL https://bun.sh/install | bash
 
-RUN npm i -g @anthropic-ai/claude-code@latest @getpaseo/cli@latest @opencode/cli@latest pnpm@latest lighthouse@latest
+RUN npm i -g @anthropic-ai/claude-code@latest @getpaseo/cli@latest @opencode/cli@latest skills@latest pnpm@latest lighthouse@latest
 
 RUN set -e; \
     case "$(uname -m)" in \
