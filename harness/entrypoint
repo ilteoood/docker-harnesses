@@ -2,7 +2,7 @@
 
 set -e
 
-skills add https://github.com/ilteoood/harness -g -a claude-code -y
+skills add https://github.com/ilteoood/harness -g -a claude-code -a opencode -y
 
 claude plugin marketplace add https://github.com/wakatime/claude-code-wakatime.git
 claude plugin marketplace add DietrichGebert/ponytail
