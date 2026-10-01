@@ -15,7 +15,7 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 | [`ilteoood/zeroclaw`](https://hub.docker.com/r/ilteoood/zeroclaw) | [zeroclaw-labs/zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) | Ubuntu 24.04 | `42617` | ![ZeroClaw](https://github.com/ilteoood/docker-harnesses/workflows/ZeroClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/nullclaw`](https://hub.docker.com/r/ilteoood/nullclaw) | [nullclaw/nullclaw](https://github.com/nullclaw/nullclaw) | Ubuntu 24.04 | `3000` | ![NullClaw](https://github.com/ilteoood/docker-harnesses/workflows/NullClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/openclaw`](https://hub.docker.com/r/ilteoood/openclaw) | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `ghcr.io/openclaw/openclaw:latest` | `18789` | ![OpenClaw](https://github.com/ilteoood/docker-harnesses/workflows/OpenClaw/badge.svg?branch=main) | Daily |
-| [`ilteoood/opencode`](https://hub.docker.com/r/ilteoood/opencode) | [opencode-ai](https://www.npmjs.com/package/opencode-ai) (npm) | Node.js LTS slim | — | ![OpenCode](https://github.com/ilteoood/docker-harnesses/workflows/OpenCode/badge.svg?branch=main) | Daily |
+| [`ilteoood/opencode`](https://hub.docker.com/r/ilteoood/opencode) | [@opencode/cli](https://www.npmjs.com/package/@opencode/cli) (npm) | Node.js LTS slim | — | ![OpenCode](https://github.com/ilteoood/docker-harnesses/workflows/OpenCode/badge.svg?branch=main) | Daily |
 | [`ilteoood/openfang`](https://hub.docker.com/r/ilteoood/openfang) | [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang) | Ubuntu 24.04 | — | ![OpenFang](https://github.com/ilteoood/docker-harnesses/workflows/OpenFang/badge.svg?branch=main) | Daily |
 | [`ilteoood/picoclaw`](https://hub.docker.com/r/ilteoood/picoclaw) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ubuntu 24.04 | `18790` | ![PicoClaw](https://github.com/ilteoood/docker-harnesses/workflows/PicoClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/claude-code`](https://hub.docker.com/r/ilteoood/claude-code) | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) (npm) | Node.js LTS slim | — | ![ClaudeCode](https://github.com/ilteoood/docker-harnesses/workflows/ClaudeCode/badge.svg?branch=main) | Daily |
@@ -75,7 +75,7 @@ docker run --name openclaw -p 18789:18789 ilteoood/openclaw
 
 - **Dockerfile:** [`Dockerfile.opencode`](./Dockerfile.opencode)
 - **Architectures:** `linux/amd64`, `linux/arm64`
-- **Build process:** Installs the latest `opencode-ai` npm package globally on a Node.js LTS slim base.
+- **Build process:** Installs the latest `@opencode/cli` npm package globally on a Node.js LTS slim base.
 
 ```sh
 docker run --name opencode -v /path/to/home:/root ilteoood/opencode
@@ -123,7 +123,7 @@ A pre-baked Claude Code image: same `node:lts-slim` base and same `claude` / `pa
 - **Dockerfile:** [`Dockerfile.harness`](./Dockerfile.harness)
 - **Entrypoint:** [`harness/entrypoint`](./harness/entrypoint)
 - **Architectures:** `linux/amd64`, `linux/arm64`
-- **Baked at build time:** `curl git gnupg wget python3 procps jq unzip ca-certificates`, GitHub CLI (`gh`), Node.js 24.x, Rust (stable, via rustup), Go (latest, via kerolloz/go-installer), Bun (latest), npm globals (`@anthropic-ai/claude-code`, `@getpaseo/cli`, `skills`, `pnpm`, `lighthouse`), Claude plugin marketplaces (`wakatime/claude-code-wakatime`, `DietrichGebert/ponytail`, `thedotmack/claude-mem`, `pbakaus/impeccable`, `anthropics/claude-plugins-official`) and plugins (`claude-code-wakatime`, `typescript-lsp`, `rust-analyzer-lsp`, `ponytail`, `claude-mem`, `impeccable`), `tokensave` binary (per-arch release download), `gh-stack` extension, and the `ilteoood/harness` skill.
+- **Baked at build time:** `curl git gnupg wget python3 procps jq unzip ca-certificates`, GitHub CLI (`gh`), Node.js 24.x, Rust (stable, via rustup), Go (latest, via kerolloz/go-installer), Bun (latest), npm globals (`@anthropic-ai/claude-code`, `@getpaseo/cli`, `@opencode/cli`, `skills`, `pnpm`, `lighthouse`), Claude plugin marketplaces (`wakatime/claude-code-wakatime`, `DietrichGebert/ponytail`, `thedotmack/claude-mem`, `pbakaus/impeccable`, `anthropics/claude-plugins-official`) and plugins (`claude-code-wakatime`, `typescript-lsp`, `rust-analyzer-lsp`, `ponytail`, `claude-mem`, `impeccable`), `tokensave` binary (per-arch release download), `gh-stack` extension, and the `ilteoood/harness` skill.
 - **Entrypoint behaviour:** runs `/usr/local/bin/init` if mounted, then `exec paseo daemon run` (the daemon runs as PID 1).
 - **Left for the mounted `/usr/local/bin/init`** (needs runtime context, secrets, or per-user state): `gh auth setup-git`, `npx -y ctx7 setup --claude --cli --api-key $CONTEXT7_API_KEY`, `tokensave install --agent claude --git-hook yes`, `git config --global user.email/user.name`.
 

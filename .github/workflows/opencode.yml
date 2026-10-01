@@ -24,10 +24,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: Get latest opencode-ai version
+      - name: Get latest opencode version
         id: latest_release
         run: |
-          TAG=$(npm view opencode-ai version)
+          TAG=$(npm view @opencode/cli version)
           if [ -z "$TAG" ]; then
             echo "Failed to fetch latest version" >&2
             exit 1

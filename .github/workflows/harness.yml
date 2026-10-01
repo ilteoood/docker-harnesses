@@ -74,6 +74,16 @@ jobs:
           fi
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
+      - name: Get latest opencode version
+        id: latest_opencode
+        run: |
+          TAG=$(npm view @opencode/cli version)
+          if [ -z "$TAG" ]; then
+            echo "Failed to fetch latest version" >&2
+            exit 1
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
       - name: Get latest tokensave version
         id: latest_tokensave
         run: |
@@ -91,7 +101,7 @@ jobs:
           platform: linux/amd64,linux/arm64
           imageName: ilteoood/harness
           dockerFile: Dockerfile.harness
-          label: claude_code_version=${{ steps.latest_claude.outputs.tag }},paseo_version=${{ steps.latest_paseo.outputs.tag }},skills_version=${{ steps.latest_skills.outputs.tag }},pnpm_version=${{ steps.latest_pnpm.outputs.tag }},lighthouse_version=${{ steps.latest_lighthouse.outputs.tag }},tokensave_version=${{ steps.latest_tokensave.outputs.tag }}
+          label: claude_code_version=${{ steps.latest_claude.outputs.tag }},paseo_version=${{ steps.latest_paseo.outputs.tag }},skills_version=${{ steps.latest_skills.outputs.tag }},pnpm_version=${{ steps.latest_pnpm.outputs.tag }},lighthouse_version=${{ steps.latest_lighthouse.outputs.tag }},opencode_version=${{ steps.latest_opencode.outputs.tag }},tokensave_version=${{ steps.latest_tokensave.outputs.tag }}
           publish: true
           dockerUser: ilteoood
           dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
