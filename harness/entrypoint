@@ -16,8 +16,8 @@ claude plugin i ponytail@ponytail
 claude plugin i claude-mem
 claude plugin i impeccable
 
-tokensave install --agent claude --git-hook no
-tokensave install --agent opencode --git-hook no
+tokensave install --agent claude --git-hook global
+tokensave install --agent opencode --git-hook global
 
 if [ -f /usr/local/bin/init ]; then
     bash /usr/local/bin/init
