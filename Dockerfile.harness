@@ -24,20 +24,6 @@ RUN curl -fsSL https://bun.sh/install | bash
 
 RUN npm i -g @anthropic-ai/claude-code@latest @getpaseo/cli@latest @opencode/cli@latest skills@latest pnpm@latest lighthouse@latest
 
-RUN skills add https://github.com/ilteoood/harness -g -a claude-code -y
-
-RUN claude plugin marketplace add https://github.com/wakatime/claude-code-wakatime.git \
-    && claude plugin marketplace add DietrichGebert/ponytail \
-    && claude plugin marketplace add thedotmack/claude-mem \
-    && claude plugin marketplace add pbakaus/impeccable \
-    && claude plugin marketplace add anthropics/claude-plugins-official \
-    && claude plugin i claude-code-wakatime@wakatime \
-    && claude plugin i typescript-lsp@claude-plugins-official \
-    && claude plugin i rust-analyzer-lsp@claude-plugins-official \
-    && claude plugin i ponytail@ponytail \
-    && claude plugin i claude-mem \
-    && claude plugin i impeccable
-
 RUN set -e; \
     case "$(uname -m)" in \
         x86_64) PATTERN="*x86_64-linux*" ;; \

@@ -2,6 +2,20 @@
 
 set -e
 
+skills add https://github.com/ilteoood/harness -g -a claude-code -a opencode -y
+
+claude plugin marketplace add https://github.com/wakatime/claude-code-wakatime.git
+claude plugin marketplace add DietrichGebert/ponytail
+claude plugin marketplace add thedotmack/claude-mem
+claude plugin marketplace add pbakaus/impeccable
+claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin i claude-code-wakatime@wakatime
+claude plugin i typescript-lsp@claude-plugins-official
+claude plugin i rust-analyzer-lsp@claude-plugins-official
+claude plugin i ponytail@ponytail
+claude plugin i claude-mem
+claude plugin i impeccable
+
 if [ -f /usr/local/bin/init ]; then
     bash /usr/local/bin/init
 fi

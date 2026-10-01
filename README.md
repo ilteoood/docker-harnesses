@@ -118,13 +118,13 @@ docker run --name claude-code -v /path/to/home:/root ilteoood/claude-code
 
 ### Harness
 
-A pre-baked Claude Code image: same `node:lts-slim` base and same `claude` / `paseo` binaries as `ilteoood/claude-code`, with the full toolchain from `claude-code.sh` already installed at build time so container startup is instant.
+A pre-baked Claude Code image: same `node:lts-slim` base and same `claude` / `paseo` binaries as `ilteoood/claude-code`, with the full toolchain from `claude-code.sh` already installed at build time.
 
 - **Dockerfile:** [`Dockerfile.harness`](./Dockerfile.harness)
 - **Entrypoint:** [`harness/entrypoint`](./harness/entrypoint)
 - **Architectures:** `linux/amd64`, `linux/arm64`
-- **Baked at build time:** `curl git gnupg wget python3 procps jq unzip ca-certificates`, GitHub CLI (`gh`), Node.js 24.x, Rust (stable, via rustup), Go (latest, via kerolloz/go-installer), Bun (latest), npm globals (`@anthropic-ai/claude-code`, `@getpaseo/cli`, `@opencode/cli`, `skills`, `pnpm`, `lighthouse`), Claude plugin marketplaces (`wakatime/claude-code-wakatime`, `DietrichGebert/ponytail`, `thedotmack/claude-mem`, `pbakaus/impeccable`, `anthropics/claude-plugins-official`) and plugins (`claude-code-wakatime`, `typescript-lsp`, `rust-analyzer-lsp`, `ponytail`, `claude-mem`, `impeccable`), `tokensave` binary (per-arch release download), `gh-stack` extension, and the `ilteoood/harness` skill.
-- **Entrypoint behaviour:** runs `/usr/local/bin/init` if mounted, then `exec paseo daemon run` (the daemon runs as PID 1).
+- **Baked at build time:** `curl git gnupg wget python3 procps jq unzip ca-certificates`, GitHub CLI (`gh`), Node.js 24.x, Rust (stable, via rustup), Go (latest, via kerolloz/go-installer), Bun (latest), npm globals (`@anthropic-ai/claude-code`, `@getpaseo/cli`, `@opencode/cli`, `skills`, `pnpm`, `lighthouse`), `tokensave` binary (per-arch release download) and `gh-stack` extension.
+- **Entrypoint behaviour:** installs the `ilteoood/harness` skill for both Claude Code and OpenCode (into `/root/.claude/skills` and `/root/.agents/skills`), and the Claude plugin marketplaces (`wakatime/claude-code-wakatime`, `DietrichGebert/ponytail`, `thedotmack/claude-mem`, `pbakaus/impeccable`, `anthropics/claude-plugins-official`) and plugins (`claude-code-wakatime`, `typescript-lsp`, `rust-analyzer-lsp`, `ponytail`, `claude-mem`, `impeccable`), then runs `/usr/local/bin/init` if mounted, then `exec paseo daemon run` (the daemon runs as PID 1). Every install is idempotent, so a restarted container re-runs them against the persisted `/root/.claude` and `/root/.agents` without failing.
 - **Left for the mounted `/usr/local/bin/init`** (needs runtime context, secrets, or per-user state): `gh auth setup-git`, `npx -y ctx7 setup --claude --cli --api-key $CONTEXT7_API_KEY`, `tokensave install --agent claude --git-hook yes`, `git config --global user.email/user.name`.
 
 ```sh
