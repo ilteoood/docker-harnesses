@@ -19,6 +19,8 @@ claude plugin i impeccable
 tokensave install --agent claude --git-hook yes
 tokensave install --agent opencode --git-hook yes
 
+npx -y ctx7 setup --claude --cli --api-key $CONTEXT7_API_KEY
+
 if [ -f /usr/local/bin/init ]; then
     bash /usr/local/bin/init
 fi
