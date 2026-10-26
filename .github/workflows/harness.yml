@@ -24,10 +24,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: Get latest claude-code version
-        id: latest_claude
+      - name: Get latest pi-coding-agent version
+        id: latest_pi
         run: |
-          TAG=$(npm view @anthropic-ai/claude-code version)
+          TAG=$(npm view @earendil-works/pi-coding-agent version)
           if [ -z "$TAG" ]; then
             echo "Failed to fetch latest version" >&2
             exit 1
@@ -84,16 +84,6 @@ jobs:
           fi
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Get latest tokensave version
-        id: latest_tokensave
-        run: |
-          TAG=$(curl -sL https://api.github.com/repos/aovestdipaperino/tokensave/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4)
-          if [ -z "$TAG" ]; then
-            echo "Failed to fetch latest version" >&2
-            exit 1
-          fi
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
-
       - name: Build and publish image
         uses: ilteoood/docker_buildx@master
         with:
@@ -101,7 +91,7 @@ jobs:
           platform: linux/amd64,linux/arm64
           imageName: ilteoood/harness
           dockerFile: Dockerfile.harness
-          label: claude_code_version=${{ steps.latest_claude.outputs.tag }},paseo_version=${{ steps.latest_paseo.outputs.tag }},skills_version=${{ steps.latest_skills.outputs.tag }},pnpm_version=${{ steps.latest_pnpm.outputs.tag }},lighthouse_version=${{ steps.latest_lighthouse.outputs.tag }},opencode_version=${{ steps.latest_opencode.outputs.tag }},tokensave_version=${{ steps.latest_tokensave.outputs.tag }}
+          label: pi_version=${{ steps.latest_pi.outputs.tag }},paseo_version=${{ steps.latest_paseo.outputs.tag }},skills_version=${{ steps.latest_skills.outputs.tag }},pnpm_version=${{ steps.latest_pnpm.outputs.tag }},lighthouse_version=${{ steps.latest_lighthouse.outputs.tag }},opencode_version=${{ steps.latest_opencode.outputs.tag }}
           publish: true
           dockerUser: ilteoood
           dockerPassword: ${{ secrets.DOCKER_HUB_PASSWORD }}
