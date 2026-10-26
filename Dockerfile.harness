@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH="/root/.cargo/bin:/root/.go/bin:/root/.bun/bin:${PATH}"
 
 RUN apt-get update \
-    && apt-get install -y curl git gnupg wget python3 procps jq unzip ca-certificates \
+    && apt-get install -y curl git gnupg wget python3 procps jq unzip build-essential ca-certificates \
     && mkdir -p -m 755 /etc/apt/keyrings \
     && out=$(mktemp) && wget -nv -O"$out" https://cli.github.com/packages/githubcli-archive-keyring.gpg \
     && cat "$out" | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
@@ -22,20 +22,7 @@ RUN curl -sL https://raw.githubusercontent.com/kerolloz/go-installer/master/go.s
 
 RUN curl -fsSL https://bun.sh/install | bash
 
-RUN npm i -g @anthropic-ai/claude-code@latest @getpaseo/cli@latest @opencode/cli@latest skills@latest pnpm@latest lighthouse@latest
-
-RUN set -e; \
-    case "$(uname -m)" in \
-        x86_64) PATTERN="*x86_64-linux*" ;; \
-        aarch64) PATTERN="*aarch64-linux*" ;; \
-        *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;; \
-    esac; \
-    gh release download --pattern "$PATTERN" \
-        -O /tmp/tokensave.tar.gz \
-        -R aovestdipaperino/tokensave \
-    && tar -xzf /tmp/tokensave.tar.gz -C /usr/local/bin \
-    && chmod +x /usr/local/bin/tokensave \
-    && rm /tmp/tokensave.tar.gz
+RUN npm i -g @earendil-works/pi-coding-agent@latest @getpaseo/cli@latest @opencode/cli@latest skills@latest pnpm@latest lighthouse@latest
 
 RUN gh extension install github/gh-stack
 
