@@ -17,7 +17,6 @@ Ready-to-run, multi-arch Docker images for AI coding assistants and personal AI 
 | [`ilteoood/openclaw`](https://hub.docker.com/r/ilteoood/openclaw) | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `ghcr.io/openclaw/openclaw:latest` | `18789` | ![OpenClaw](https://github.com/ilteoood/docker-harnesses/workflows/OpenClaw/badge.svg?branch=main) | Daily |
 | [`ilteoood/opencode`](https://hub.docker.com/r/ilteoood/opencode) | [@opencode/cli](https://www.npmjs.com/package/@opencode/cli) (npm) | Node.js LTS slim | — | ![OpenCode](https://github.com/ilteoood/docker-harnesses/workflows/OpenCode/badge.svg?branch=main) | Daily |
 | [`ilteoood/openfang`](https://hub.docker.com/r/ilteoood/openfang) | [RightNow-AI/openfang](https://github.com/RightNow-AI/openfang) | Ubuntu 24.04 | — | ![OpenFang](https://github.com/ilteoood/docker-harnesses/workflows/OpenFang/badge.svg?branch=main) | Daily |
-| [`ilteoood/picoclaw`](https://hub.docker.com/r/ilteoood/picoclaw) | [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ubuntu 24.04 | `18790` | ![PicoClaw](https://github.com/ilteoood/docker-harnesses/workflows/PicoClaw/badge.svg?branch=main) | Weekly (Mon) |
 | [`ilteoood/claude-code`](https://hub.docker.com/r/ilteoood/claude-code) | [@anthropic-ai/claude-code](https://www.npmjs.com/package/@anthropic-ai/claude-code) (npm) | Node.js LTS slim | — | ![ClaudeCode](https://github.com/ilteoood/docker-harnesses/workflows/ClaudeCode/badge.svg?branch=main) | Daily |
 | [`ilteoood/harness`](https://hub.docker.com/r/ilteoood/harness) | [@earendil-works/pi-coding-agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) (npm) | Node.js LTS slim | — | ![Harness](https://github.com/ilteoood/docker-harnesses/workflows/Harness/badge.svg?branch=main) | Daily |
 | [`ilteoood/pi`](https://hub.docker.com/r/ilteoood/pi) | [@earendil-works/pi-coding-agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) (npm) | Node.js LTS slim | — | ![Pi](https://github.com/ilteoood/docker-harnesses/workflows/Pi/badge.svg?branch=main) | Daily |
@@ -89,21 +88,6 @@ docker run --name opencode -v /path/to/home:/root ilteoood/opencode
 
 ```sh
 docker run --name openfang ilteoood/openfang
-```
-
-### PicoClaw
-
-A standalone [PicoClaw](https://github.com/sipeed/picoclaw) container.
-
-- **Dockerfile:** [`Dockerfile.picoclaw`](./Dockerfile.picoclaw)
-- **Architectures:** `linux/amd64`, `linux/arm64`
-- **Build process:** Downloads the latest PicoClaw release from GitHub.
-- **Environment variables:**
-  - `PICOCLAW_MODE` — PicoClaw run mode (default: `gateway`)
-- **Exposed port:** `18790`
-
-```sh
-docker run --name picoclaw -p 18790:18790 ilteoood/picoclaw
 ```
 
 ### Claude Code
@@ -216,7 +200,7 @@ services:
 
 ## Docker Compose
 
-A ready-to-use [`docker-compose.yml`](./docker-compose.yml) is included in the repository. It defines services for `zeroclaw`, `picoclaw`, `opencode`, and `claude-code` with shared volumes and configuration support.
+A ready-to-use [`docker-compose.yml`](./docker-compose.yml) is included in the repository. It defines services for `zeroclaw`, `opencode`, and `claude-code` with shared volumes and configuration support.
 
 ```sh
 docker compose up -d
@@ -235,7 +219,6 @@ docker compose up -d
 │   │   ├── openclaw.yml
 │   │   ├── opencode.yml
 │   │   ├── openfang.yml
-│   │   ├── picoclaw.yml
 │   │   ├── claude-code.yml
 │   ├── harness.yml
 │   │   ├── codex.yml
@@ -250,7 +233,6 @@ docker compose up -d
 ├── opencode/               # OpenCode entrypoint & init scripts
 ├── claude-code/            # Claude Code entrypoint & init scripts
 ├── harness/                # Harness entrypoint & init scripts
-├── picoclaw/             # PicoClaw entrypoint, init & download scripts
 ├── codex/                   # Codex CLI entrypoint & init scripts
 ├── copilot-cli/             # Copilot CLI entrypoint & init scripts
 ├── pi/                      # Pi coding agent entrypoint & init scripts
@@ -263,7 +245,6 @@ docker compose up -d
 ├── Dockerfile.openclaw
 ├── Dockerfile.opencode
 ├── Dockerfile.openfang
-├── Dockerfile.picoclaw
 ├── Dockerfile.claude-code
 ├── Dockerfile.harness
 ├── Dockerfile.codex
@@ -281,7 +262,7 @@ docker compose up -d
 All images are built and published automatically using [GitHub Actions](https://github.com/features/actions):
 
 - **Trigger:** Push to `main`, manual dispatch, or a scheduled cron job.
-- **Schedule:** Most images are rebuilt daily at 03:00 UTC; NullClaw, PicoClaw, and ZeroClaw are rebuilt weekly on Mondays.
+- **Schedule:** Most images are rebuilt daily at 03:00 UTC; NullClaw and ZeroClaw are rebuilt weekly on Mondays.
 - **Multi-arch builds** are performed with [`ilteoood/docker_buildx`](https://github.com/ilteoood/docker_buildx).
 - **Rust images** (ZeroClaw, OpenFang) use [`houseabsolute/actions-rust-cross`](https://github.com/houseabsolute/actions-rust-cross) for cross-compilation.
 - **Dependabot** is configured to check for Docker base-image updates daily.
