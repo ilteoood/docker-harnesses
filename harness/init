@@ -5,6 +5,7 @@ set -e
 apt-get update
 apt-get full-upgrade -y
 
+gh auth setup-git
 skills add https://github.com/ilteoood/harness -g -a pi -y
 
 pi install npm:pi-wakatime
@@ -40,7 +41,6 @@ pi update --all
 #chmod +x /usr/local/bin/tokensave
 #tokensave install --agent pi --git-hook global
 
-gh auth setup-git
 git config --global user.email "matteopietro.dazzi@gmail.com"
 git config --global user.name "Matteo Pietro Dazzi"
 
